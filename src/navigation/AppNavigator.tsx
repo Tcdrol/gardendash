@@ -30,9 +30,9 @@ export function AppNavigator() {
           }
 
           return (
-            <View className={`items-center ${focused ? 'opacity-100' : 'opacity-50'}`}>
-              <Text className="text-2xl">{iconName}</Text>
-              <Text className="text-xs mt-1">{label}</Text>
+            <View className={`items-center  pt-5 ${focused ? 'opacity-100' : 'opacity-50'}`}>
+              <Text className="text-xl">{iconName}</Text>
+              <Text className="text-[7px]">{label}</Text>
             </View>
           );
         },
@@ -42,7 +42,20 @@ export function AppNavigator() {
           backgroundColor: 'white',
           borderTopWidth: 1,
           borderTopColor: '#e5e7eb',
-          height: 80,
+          height: 75,
+          paddingTop: 5,
+          paddingBottom: 5,
+          zIndex: 10,
+          position: 'relative',
+          elevation: 10,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 5,
         },
         tabBarActiveTintColor: '#3b82f6',
         tabBarInactiveTintColor: '#9ca3af',
