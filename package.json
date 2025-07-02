@@ -11,6 +11,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^2.2.0",
     "@react-navigation/bottom-tabs": "^7.4.2",
     "@react-navigation/native": "^7.1.14",
     "d3-shape": "^3.2.0",
@@ -19,11 +20,13 @@
     "nativewind": "latest",
     "react": "19.0.0",
     "react-native": "0.79.4",
+    "react-native-appearance": "^0.3.4",
     "react-native-chart-kit": "^6.12.0",
     "react-native-reanimated": "~3.17.4",
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.11.1",
-    "react-native-svg": "15.11.2"
+    "react-native-svg": "15.11.2",
+    "expo-system-ui": "~5.0.9"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
