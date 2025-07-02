@@ -138,24 +138,6 @@ export function AnalyticsScreen() {
                 data,
                 color: () => color,
                 strokeWidth: 2,
-                withDots: true,
-                withInnerLines: false,
-                withOuterLines: true,
-                withHorizontalLines: true,
-                withVerticalLines: false,
-                withHorizontalLabels: true,
-                withVerticalLabels: true,
-                propsForDots: {
-                  r: '4',
-                  strokeWidth: '2',
-                  stroke: isDark ? '#1f2937' : '#ffffff',
-                  fill: (opacity: number = 1, index: number) => {
-                    if (highlightPoint && highlightPoint(data[index])) {
-                      return '#EF4444'; // Red for highlighted points
-                    }
-                    return color;
-                  },
-                },
               }]
             }}
             width={screenWidth - 48}
@@ -167,6 +149,28 @@ export function AnalyticsScreen() {
               propsForHorizontalLabels: {
                 ...chartConfig.propsForLabels,
                 textAnchor: 'middle',
+              },
+              // Grid line styling
+              propsForBackgroundLines: {
+                stroke: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+              },
+              // Dot styling
+              propsForDots: {
+                r: '4',
+                strokeWidth: '2',
+                stroke: isDark ? '#1f2937' : '#ffffff',
+              },
+              // Highlight points that match the highlight condition
+              color: (opacity = 1, index?: number) => {
+                if (highlightPoint && data && typeof index === 'number' && index >= 0 && index < data.length && highlightPoint(data[index])) {
+                  return 'rgba(239, 68, 68, 1)'; // Red for highlighted points
+                }
+                return color;
+              },
+              // Ensure the color function is properly typed
+              style: {
+                borderRadius: 16,
+                marginVertical: 8,
               },
             }}
             bezier

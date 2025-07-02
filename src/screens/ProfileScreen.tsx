@@ -154,19 +154,7 @@ export function ProfileScreen() {
             onPress={() => console.log("Change password")}
           />
           
-          <SettingItem
-            icon="👤"
-            title="Two-Factor Authentication"
-            titleClassName="text-gray-900 dark:text-white"
-            onPress={() => console.log("2FA settings")}
-          />
-          
-          <SettingItem
-            icon="📱"
-            title="Device Management"
-            titleClassName="text-gray-900 dark:text-white"
-            onPress={() => console.log("Device management")}
-          />
+         
         </View>
 
         {/* Logout */}

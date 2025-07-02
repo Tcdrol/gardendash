@@ -4,13 +4,19 @@ import { AnalyticsScreen } from '../screens/AnalyticsScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
 import { View, Text } from 'react-native';
+import { useTheme } from '../context/ThemeContext';
 
 const Tab = createBottomTabNavigator();
 
 export function AppNavigator() {
+  const { isDark } = useTheme();
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
+        contentStyle: {
+          backgroundColor: isDark ? '#111827' : '#f9fafb',
+        },
         tabBarIcon: ({ focused }) => {
           let iconName;
           let label;
@@ -30,35 +36,24 @@ export function AppNavigator() {
           }
 
           return (
-            <View className={`items-center  pt-5 ${focused ? 'opacity-100' : 'opacity-50'}`}>
+            <View className={`items-center pt-5 ${focused ? 'opacity-100' : 'opacity-50'}`}>
               <Text className="text-xl">{iconName}</Text>
-              <Text className="text-[7px]">{label}</Text>
+              <Text className={`text-[7px] ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                {label}
+              </Text>
             </View>
           );
         },
         tabBarShowLabel: false,
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: 'white',
+          backgroundColor: isDark ? '#1f2937' : 'white',
           borderTopWidth: 1,
-          borderTopColor: '#e5e7eb',
+          borderTopColor: isDark ? '#374151' : '#e5e7eb',
           height: 75,
-          paddingTop: 5,
-          paddingBottom: 5,
-          zIndex: 10,
-          position: 'relative',
-          elevation: 10,
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-          elevation: 5,
         },
-        tabBarActiveTintColor: '#3b82f6',
-        tabBarInactiveTintColor: '#9ca3af',
+        tabBarActiveTintColor: isDark ? '#60a5fa' : '#3b82f6',
+        tabBarInactiveTintColor: isDark ? '#9ca3af' : '#6b7280',
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
