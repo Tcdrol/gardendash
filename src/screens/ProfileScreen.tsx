@@ -128,19 +128,7 @@ export function ProfileScreen() {
             }
           />
           
-          <SettingItem
-            icon="🔒"
-            title="Biometric Login"
-            titleClassName="text-gray-900 dark:text-white"
-            rightComponent={
-              <Switch
-                value={biometrics}
-                onValueChange={setBiometrics}
-                trackColor={{ false: '#9ca3af', true: '#1e40af' }}
-                thumbColor={isDark ? '#f3f4f6' : '#f9fafb'}
-              />
-            }
-          />
+          
         </View>
 
         {/* Security */}
