@@ -4,8 +4,10 @@ import { NavigationContainer, DefaultTheme as NavigationDefaultTheme, DarkTheme 
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AppNavigator } from './src/navigation/AppNavigator';
+import { AuthNavigator } from './src/navigation/AuthNavigator';
 import { ThemeProvider, useTheme } from './src/context/ThemeContext';
-import { useColorScheme } from 'react-native';
+import { AuthProvider, useAuth } from './src/context/AuthContext';
+import { useColorScheme, ActivityIndicator, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 // Custom theme colors that match our design system
@@ -37,27 +39,40 @@ const CustomDarkTheme = {
 
 function AppContent() {
   const { isDark } = useTheme();
+  const { user, isLoading } = useAuth();
   const systemColorScheme = useColorScheme();
   
   // Use our custom themes
   const theme = isDark ? CustomDarkTheme : CustomLightTheme;
 
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: isDark ? '#111827' : '#f9fafb' }}>
+        <ActivityIndicator size="large" color={isDark ? '#3b82f6' : '#2563eb'} />
+      </View>
+    );
+  }
+
   return (
     <NavigationContainer theme={theme}>
       <StatusBar style={isDark ? 'light' : 'dark'} />
-      <AppNavigator />
+      {user ? <AppNavigator /> : <AuthNavigator />}
     </NavigationContainer>
   );
 }
 
-export default function App() {
+function RootApp() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <ThemeProvider>
-          <AppContent />
+          <AuthProvider>
+            <AppContent />
+          </AuthProvider>
         </ThemeProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );
 }
+
+export default RootApp;

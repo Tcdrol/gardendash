@@ -1,12 +1,64 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import { HomeScreen } from '../screens/HomeScreen';
 import { AnalyticsScreen } from '../screens/AnalyticsScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
 import { View, Text } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
+import { EditProfileScreen } from '../screens/profile/EditProfileScreen';
+import { ChangePasswordScreen } from '../screens/profile/ChangePasswordScreen';
+import { HelpSupportScreen } from '../screens/HelpSupportScreen';
+import { TermsPrivacyScreen } from '../screens/TermsPrivacyScreen';
 
 const Tab = createBottomTabNavigator();
+const ProfileStack = createStackNavigator();
+
+// Profile Stack Navigator
+function ProfileStackNavigator() {
+  const { isDark } = useTheme();
+  
+  return (
+    <ProfileStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: isDark ? '#1f2937' : '#ffffff',
+        },
+        headerTintColor: isDark ? '#f9fafb' : '#111827',
+        headerTitleStyle: {
+          fontWeight: '600',
+        },
+        headerBackTitle: 'Back',
+      }}
+    >
+      <ProfileStack.Screen 
+        name="ProfileMain" 
+        component={ProfileScreen} 
+        options={{ headerShown: false }}
+      />
+      <ProfileStack.Screen 
+        name="EditProfile" 
+        component={EditProfileScreen} 
+        options={{ title: 'Edit Profile' }}
+      />
+      <ProfileStack.Screen 
+        name="ChangePassword" 
+        component={ChangePasswordScreen} 
+        options={{ title: 'Change Password' }}
+      />
+      <ProfileStack.Screen 
+        name="HelpSupport" 
+        component={HelpSupportScreen} 
+        options={{ title: 'Help & Support' }}
+      />
+      <ProfileStack.Screen 
+        name="TermsPrivacy" 
+        component={TermsPrivacyScreen} 
+        options={{ title: 'Terms & Privacy' }}
+      />
+    </ProfileStack.Navigator>
+  );
+}
 
 export function AppNavigator() {
   const { isDark } = useTheme();
@@ -27,7 +79,7 @@ export function AppNavigator() {
           } else if (route.name === 'Analytics') {
             iconName = '📊';
             label = 'Analytics';
-          } else if (route.name === 'Profile') {
+          } else if (route.name === 'ProfileStack') {
             iconName = '👤';
             label = 'Profile';
           } else if (route.name === 'Settings') {
@@ -58,7 +110,13 @@ export function AppNavigator() {
     >
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Analytics" component={AnalyticsScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen 
+        name="ProfileStack" 
+        component={ProfileStackNavigator} 
+        options={{
+          headerShown: false,
+        }}
+      />
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   );
