@@ -50,10 +50,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       // Get all users
       const usersData = await AsyncStorage.getItem('@users');
-      const users: User[] = usersData ? JSON.parse(usersData) : [];
+      console.log('Stored users data:', usersData); // Debug log
       
-      // Find user by email
-      const foundUser = users.find(u => u.email === email);
+      const users: User[] = usersData ? JSON.parse(usersData) : [];
+      console.log('Parsed users:', users); // Debug log
+      
+      // Find user by email (case-insensitive comparison)
+      const foundUser = users.find(u => u.email.toLowerCase() === email.toLowerCase().trim());
       
       if (!foundUser) {
         throw new Error('No user found with this email. Please sign up first.');
@@ -64,6 +67,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         // Set as current user
         await AsyncStorage.setItem('@currentUser', JSON.stringify(foundUser));
         setUser(foundUser);
+        console.log('Login successful, user set:', foundUser); // Debug log
       } else {
         throw new Error('Invalid password');
       }
@@ -81,18 +85,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       // Get existing users
       const usersData = await AsyncStorage.getItem('@users');
+      console.log('Existing users data:', usersData); // Debug log
+      
       const users: User[] = usersData ? JSON.parse(usersData) : [];
       
-      // Check if user already exists
-      const userExists = users.some(u => u.email === email);
+      // Check if user already exists (case-insensitive comparison)
+      const userExists = users.some(u => u.email.toLowerCase() === email.toLowerCase().trim());
       if (userExists) {
         throw new Error('A user with this email already exists');
       }
       
       const newUser: User = {
         id: Math.random().toString(36).substr(2, 9),
-        name,
-        email,
+        name: name.trim(),
+        email: email.trim().toLowerCase(), // Store email in lowercase
         password, // In a real app, hash this password before storing
       };
       
@@ -103,6 +109,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       await AsyncStorage.setItem('@users', JSON.stringify(updatedUsers));
       await AsyncStorage.setItem('@currentUser', JSON.stringify(newUser));
       
+      console.log('New user created and logged in:', newUser); // Debug log
       setUser(newUser);
       return Promise.resolve();
     } catch (error) {

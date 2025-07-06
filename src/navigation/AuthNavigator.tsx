@@ -48,37 +48,7 @@ const headerStyles = (isDark: boolean): StackNavigationOptions => ({
   headerBackTitleVisible: false,
   headerLeftContainerStyle: {
     paddingLeft: Platform.OS === 'ios' ? 8 : 0,
-  },
-  headerRightContainerStyle: {
-    paddingRight: 16,
-  },
-});
-
-export function AuthNavigator() {
-  const { isDark } = useTheme();
-  
-  const screenOptions: StackNavigationOptions = {
-    ...headerStyles(isDark),
-    headerShown: false,
-    cardStyle: { 
-      backgroundColor: isDark ? '#111827' : '#ffffff' 
-    },
-    animationEnabled: true,
-  };
-
-  // Create screen components with Suspense
-  const Screens = {
-    Login: withSuspense(LoginScreen),
-    Signup: withSuspense(SignupScreen),
-    ForgotPassword: withSuspense(ForgotPasswordScreen),
-  };
-
-  return (
-    <Stack.Navigator 
-      initialRouteName="Login"
-      screenOptions={screenOptions}
-    >
-      <Stack.Screen 
+  },--[]
         name="Login" 
         component={Screens.Login}
         options={{
